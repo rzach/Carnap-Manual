@@ -1,13 +1,14 @@
-# Carnap's Pandoc MarkDown
+# Carnap's MarkDown
 
-Within Carnap, shared documents and problem sets are created using *pandoc*
-markdown, a simple formatting language (akin to LaTeX) developed by John
-McFarlane as part of the [Pandoc](https://pandoc.org) project. Pandoc markdown
-extends John Gruber's original markdown syntax with some additional niceties.
+Within Carnap, shared documents and problem sets are created using 
+Markdown, a simple formatting language (akin to LaTeX) devloped by
+John Gruber.
 
-It would be a little redundant to give the full specifications for pandoc
-markdown here, since there are many excellent resources already available.
-See, instead,
+It would be a little redundant to give the full specifications for
+markdown here, since there are many excellent resources already
+available. See, instead,
+
+**Provide better resources**
 
 1. John Gruber's original [markdown
    specification](https://daringfireball.net/projects/markdown/).
@@ -15,21 +16,23 @@ See, instead,
 
 If you learn best from example, it's also possible to download the source code
 for documents shared on Carnap.io from the shared document list, available at
-<https://carnap.io/shared>. The pandoc source for this document, should you
+<https://carnap.io/shared>. The Markdown source for this document, should you
 wish to inspect it, is available
 [here](https://github.com/Carnap/Carnap-Manual/blob/main/pandoc.qmd).
 
-You can create pandoc documents in any text editing program. Pandoc is nothing
+You can create  documents in any text editing program. Markdown is nothing
 but plain text that is written with some special notation to indicate how text
 is to be formatted. For example, you can write `*italic*` to generate the text
 "*italic*". However, there are some very good text-editor plugins and dedicated
-applications available for working with Pandoc. These provide extra features
+applications available for working with Markdown. These provide extra features
 like live previews of the formatted text. A list of these can be found
 [here](https://github.com/jgm/pandoc/wiki/Pandoc-Extras#editors). An online
-pandoc editor, with live previews of what the rendered document will look like,
+Markdown editor, with live previews of what the rendered document will look like,
 can be found at <http://markup.rocks>.
 
 ## Pandoc Extensions
+
+**No longer applicable?**
 
 Carnap's pandoc parser incorporates the following pandoc extensions:
 
@@ -59,54 +62,139 @@ Carnap's pandoc parser incorporates the following pandoc extensions:
 For more details, about each of these extensions, please see the [Pandoc Users
 Guide](https://pandoc.org/MANUAL.html#extensions).
 
+## Basic markup
+
+* Any text paragraph, list, heading, exercise block should be
+separated from the surrounding material by empty lines.
+* Headings are text on a line by itself, with between one to six `#`
+  characters, followed by a space, on the left. The number of `#`'s
+  corresponds to the heading level. Note that exercise documents are
+  embedded in a surrounding page (either on the Carnap webpage or in
+  an LMS, which provides the main title for the assignment, which
+  should be a top-level heading. Inside an assignment Markdown
+  document, the highest level heading should be 2, i.e., `##`)
+* *Italics* is done by surrounding text with `*` or `_` characters
+  (e.g., `_italics_` or `*italics*`) and **boldface** with `**` (e.g.,
+  `**boldface**`)
+* Bulleted lists start each line with `*` or `-`, and numbered lists
+  with `#.` or `1.`, `2.`, etc.
+* A footnote is input as a `[^label]` marker in the text and a
+`[^label]:` definition somewhere in the same source, e.g.,
+```md
+Frege drew the distinction in 1892.[^sinn]
+
+[^sinn]: *Über Sinn und Bedeutung*, page 25.
+```
+* Tables are coded as [in Github Flavored Markdown](https://github.github.com/gfm/#tables-extension-): a header row, a row of
+dashes, then one row per line, with columns separated by `|`, e.g.,
+```md
+| symbol | ascii | reads          |
+| ------ | ----- | -------------- |
+| `∧`    | `/\`  | and            |
+| `→`    | `->`  | if … then      |
+```
+* Formulas and mathematics can be entered in LaTeX between `$`'s or
+  `$$`s, e.g.,
+```md
+A conditional $P \to Q$ is false only when $P$ is true and $Q$ false.
+
+$$\forall x\,(Fx \to Gx) \leftrightarrow \neg\exists x\,(Fx \wedge \neg Gx)$$
+```
+
 ## Exercises
 
 ### General Pattern
 
 Carnap's exercises are created by including special *code blocks* within a
-pandoc document. A code block looks something like this:
+Markdown document. A code block looks something like this:
 
-    ~~~ 
-    CONTENT GOES HERE
-    ~~~
+```
+:::exercise-type{ATTRIBUTES}
+DESCRIPTION
 
-To indicate which type of exercise you want to create, you apply *classes* and
-*data attributes* to the code block. That would look something like this:
+SPECIFICATION
+:::
+```
+The `exercise-type` part specifies what kind of exercise it is, e.g.,
+`truth-table` or `fitch-proof`. 
 
-    ~~~{.SOMECLASS .ANOTHER attribute="value"}
-    label CONTENT GOES HERE
-    ~~~
+The `DESCRIPTION` part is plain text that is displayed at the top of
+the exercise, e.g., instructions for the student.
 
-with classes indicated by a leading `.`, and attributes assigned with the `=`
-sign, and surrounded by quotes. 
+The `SPECIFICATION` part includes the specifics for the exercise,
+e.g., which options to give in a multiple-choice question and which
+one is correct, or what truth table to display. 
 
-The leading `label` within the body of the code block will be used to generate
-an anchor tag to your exercise, so that you can link directly to the exercise
-at the URL `ASSIGNMENTURL#exercise-label` where `ASSIGNMENTURL` is the URL for
-the assignment, and `label` is the label you gave to that particular exercise.
+The `ATTRIBUTES` part specifies how Carnap will display, grade, and
+provide feedback for the exercise, as well as various options that are
+specific to the various exercise types. Attributes are provided as
+`key=value` or `key="value"` pairs. The quotation marks are necessary
+if `value` includes spaces. They `key=value` pairs themselves are
+separated by spaces.
 
-### Some common attributes
+### Common attributes
 
-Here are some common attributes that can be applied to to any exercise
+Here are the common attributes that apply to to any exercise:
 
-<div class="table">
+- `id` (mandatory). Exery exercise needs an ID You can specify it as `id="ID"`.
+  (If your ID is a string that begins with a letter and otherwise
+  includes only letters, numbers, hyphens, and underscores, you can
+  laso specify it as `#ID` right after the opening `{`.)
+- `title` (optional). This is displayed in small caps right before the
+  description.
+- `exam` (optional). This determines if Carnap records a submission of an
+  incorrect exercise (`exam=true`) or allows submission only when the
+  exercise is solved correctly (`exam=false`).
+- `feedback` (optional). This determines how much feedback Carnap gives to the
+  student.
+  - `feedback=none` means give no feedback, don't show a
+  *Check* button, and don't show a green checkmark when the exercise
+  is correctly solved.
+  - `feedback=terse`
+  means the only feedback is whether the exercise is solved correctly
+  (a *Check* button is offered and a green checkmark is shown when
+  correct).
+  - `feedback=full` in addition provides hints as to what
+  isn't correct.
+- `points` (optional). Provide the point value of the exercise. If no
+  point value is specified, the exercise is worth 1 point. Only
+  integer point values are accepted.
 
-Name                     Effect
------------------------- ------------------------------------------------------------------
-`points`                 Sets a custom point value
-`late-credit`            Sets a custom point value for a late submission
-`submission`             Controls how work is submitted. Set to "none" to disable submission
-`options`                Exercise-specific options
------------------------- ------------------------------------------------------------------
+In contrast to Carnap.io, Carnap Next determines the default settings for
+`exam` and `feedback` based on the assignment type and whether grades
+are released. On *Reading/resource* and *Practice assignments*,
+`feedback` defaults to `full` and `exam` defaults to `false` (i.e.,
+only correct exercises can be submitted on practice assignments). On
+*Graded assignments*, `exam` defaults to `true` and `feedback` defaults to `none` until grades are
+released, and to `full` thereafter. If an exercise has `exam` and/or
+`feedback` explicitly specified, it overrides these default settings.
+So a graded exercise that should give feedback or only accept correct
+submissions has to say so on every exercise.
 
-</div>
 
-the `options` attribute might require some extra explanation. This attribute is
-set to a string of space separated words, indicating what special options are
-set for the exercise-block it is attached to. Different types of exercises
-allow for different options.
+### Exercise Types
+
+The available types of exercises are:
+
+1. [Derivations](derivations.html)
+2. [Truth Tables](truth-tables.html)
+3. [Translations](translation.html)
+4. [Model Checking](modelchecker.html)
+5. [Gentzen-Prawitz Natural Deduction](gentzen-ND.html)
+6. [Sequent Calculus Deductions](sequent-calculus.html)
+7. [Qualitative Problems](qualitative.html)
+8. [Truth Trees (Semantic Tableaux)](truth-tree.html) **Not yet implmented**
+9. [Syntax Checking](syntax-check.html) **Not yet implmented**
+
+To learn more about each one, including the available options and
+additional attributes, follow the links above.
+
+**Rest of file not yet updated**
+
 
 ### Random problems
+
+**Not yet/no longer?? implemented**
 
 When you create a problem set, the different problems within a code block will
 generally be assigned numbers or some other identifier. So you might write
@@ -135,6 +223,8 @@ as an assignment, so when the document is viewed through the instructor's
 
 ### Choose-One problems
 
+**Not yet/no longer?? implemented**
+
 If more than one problem is given the same label but the problems are *not*
 part of the same code block or are not next to one another, then both problems
 will be displayed. However, within each assignment, a student can submit at
@@ -142,29 +232,15 @@ most one problem with a given label. So if you want to give your students the
 option to choose just one of several problems to complete, you can set those
 problems to all share a single label.
 
-### Exercise Types
-
-The available types of exercises are:
-
-1. [Derivations](derivations.html)
-2. [Truth Tables](truth-tables.html)
-3. [Translations](translation.html)
-4. [Model Checking](modelchecker.html)
-5. [Gentzen-Prawitz Natural Deduction](gentzen-ND.html)
-6. [Sequent Calculus Deductions](sequent-calculus.html)
-7. [Qualitative Problems](qualitative.html)
-8. [Truth Trees (Semantic Tableaux)](truth-tree.html)
-9. [Syntax Checking](syntax-check.html)
-
-To learn more about each one, including the available options and
-additional attributes, follow the links above.
 
 ## Other Features
 
 ### Formula Parsing
 
+**Not yet/no longer?? implemented**
+
 Carnap's formula parser can be used to render and display formulas and sequents
-inline within a pandoc document. So for example, writing something like
+inline within a Markdown document. So for example, writing something like
 
     `AxF(x)\/Ex-F(x)`{system="firstOrder"}
 

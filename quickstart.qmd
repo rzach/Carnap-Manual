@@ -2,10 +2,14 @@
 
 ## Get an account
 
-Click the [login link](https://carnap.io/auth/login) located in the upper right hand
-corner of most Carnap pages, and log in with a Google account (a Gmail
-account works, but you can also make a Google account with a different
-email).
+Go to the [Carnap Next
+server](https://lhttps://carnap-server-demo.carnap.workers.dev/),
+enter your email, and click "Send login link". You will get an email
+in your inbox with a link to click. That link will take you back to
+the Carnap Next server and you will be logged in. (If you do not get a
+link, your email provider may be classifying the login link as spam.
+If you don't find the email in your spam or quarantine folder, try a
+different email.)
 
 Email Graham Leach-Krouse at
 [gleachkr@gmail.com](mailto:gleachkr@gmail.com) using your institutional
@@ -23,24 +27,28 @@ of the types listed on [the main page](index.html). They are:
 
 1. [Derivations](derivations.html)
 2. [Truth Tables](truth-tables.html)
-3. [Translations](translation.html)
+3. [Translations](translation.html) **Not yet implemented**
 4. [Model Checking](modelchecker.html)
 5. [Gentzen-Prawitz Natural Deduction](gentzen-ND.html)
 6. [Sequent Calculus Deductions](sequent-calculus.html)
 7. [Qualitative Problems](qualitative.html), e.g., multiple-choice
-8. [Truth Trees (Semantic Tableaux)](truth-tree.html)
-9. [Syntax Checking](syntax-check.html)
+8. [Truth Trees (Semantic Tableaux)](truth-tree.html) **Not yet implemented**
+9. [Syntax Checking](syntax-check.html) **Not yet implemented**
 
 Each assignment document is a plain text file formatted in Markdown, a
 simple markup language.  (Typically, the extension of Markdown text
 files is `.md`.) You can find a comprehensive introduction in the
-[Markdown Guide](https://www.markdownguide.org/) including a list of editors
-that support Markdown. For a quick reference, try [Learn Markdown in 60
-seconds](https://commonmark.org/help/). Any plain text editor is fine, but
-Markdown (and Carnap) are sticklers about spaces and newlines in Markdown
-documents.  So make sure your editor does not automatically wrap text.  
+[Markdown Guide](https://www.markdownguide.org/) including a list of
+editors that support Markdown. For a quick reference, try [Learn
+Markdown in 60 seconds](https://commonmark.org/help/). Any plain text
+editor is fine, but Markdown (and Carnap) are sticklers about spaces
+and newlines in Markdown documents.  So make sure your editor does not
+automatically wrap text. (The specific features of Carnap's Markdown
+format are dtailed on the [Carnap's Markdown](pandoc.html))
 
 ### Downloading shared documents
+
+**Not yet implemented**
 
 You can start with an existing document another instructor has shared.
 A list of shared documents can be found at
@@ -67,6 +75,8 @@ an [online converter](https://pandoc.org/try/) (select from LaTeX to
 Markdown (pandoc)).
 
 ### Carnap code blocks
+
+**Translation problems not yet implemented**
 
 Next you turn each problem into a Carnap code block. For instance, a
 translation exercise will be put into your Markdown document as:
@@ -123,42 +133,90 @@ format of Carnap's documents.
 
 ## Upload and test your document 
 
-On your [Instructor Page](https://carnap.io/instructor/) on Carnap,
-there is a [Manage Uploaded
-Documents](dashboard.md#manage-uploaded-documents) tab where you will
-upload your finished assignment documents. 
+On your [Content
+page](https://carnap-server-demo.carnap.workers.dev/content) on
+Carnap, you can create content items. Each content item can have any
+number of "revisions", i.e., versions.
 
-![Document Upload tab](images/upload-doc.png)
+Create your content item by entering a title, then click "Create
+content item". This will take you to the content record for this item.
+(You can also get to the content record by clicking on the title of
+the item on the content page.)
 
-Once a document is uploaded, it will show up in your [Instructor
-Page](https://carnap.io/instructor/) in the *Manage Uploaded
-Documents* tab. If you click on the file name, Carnap will display
-the document to you the same way that students will see it. You might
-first have to go through a bit of proof-reading. If the page contains
-an error message instead of the problem you expect, it's probably
-because you misspelled an option or did not use the correct syntax for
-your selected system.
+You can now uplaod your document by clicking the "Browse..." button
+and selecting the file you want to upload. Then fill out the revision
+notes field (e.g., say, "First uplaod") and click "Upload revision".
+
+Once your document is uploaded, it will show up as a revision in the
+*Content record*. If you click on the *Details* link for a revision, Carnap will display
+the the *Revision record* for the document, in the version
+corresponding to the revision you selected. The content record shows
+both the source code (Markdown) and how Carnap will display the
+document to students.
+to you the same way that students will see it.
+
+You might first have to go through a bit of proof-reading. If the page
+does not display the way you want it to, you can creat a new revision
+directly on the server. Go (back) to the *Content record* for the
+document you uploaded, and click *Create revision* in the lower right
+corner. This will open the document for editiong, with a preview next
+to it. (If the preview does not fit in the same window, you will see
+*Write* and *Preview* buttons at the top to switch between editing and
+preview.) When you are done fixing your document, you can give the
+revision a description at the bottom, then click *Create revision*.
 
 ## Set up a course and assign your problems
 
 Once you are ready to give your problem sets to students, you have to
-make a course for them to enrol in. You do this on your [Instructor
-Page](https://carnap.io/instructor/) in the the *Manage Courses* card.
+make a course for them to enrol in. You do this on the [*Courses*
+page](https://carnap-server-demo.carnap.workers.dev/courses). Give
+your course a name and click *Create course*.
+
+Clicking on the course title will take you to the *Course record* for
+the course you created.
+
 You will provide your students with an enrolment link which you can
-find at the bottom of your class card. This
-[video](https://youtu.be/lmkWcxqxEZk) describes what this process
-looks like for a student.  See the documentation of the [Carnap
-Dashboard](dashboard.html) for more detail.
+find   See the documentation of the [Course and assignment management](dashboard.html) for more detail.
 
 When you (and your students) are ready, you can assign any of your
-uploaded documents to your students. Carnap will allow them to
-complete and submit them. Once a problem is submitted, Carnap 
-records the point value you have given to the problems as a score for
-the student.  Students can see on their Student Home page which problems
-the have submitted and how many points they earned. You can also (in
-the course card for your course) see a list of enrolled students.
-Below the student roster, there is a link to download grades (per
-assignment, per problem).  Your course card will look something like
-this:
+content items as an assignment to your students. To do this, create an
+assignment by giving it a title and clicking *Create assignment*. An
+assignment can be either in draft mode, or it can be published (when
+it is available to students).
 
-![The course card](images/course-tab.png)
+Creating a new assignment will take you to the *Draft settings* for
+the assignment. Here you can enter or change the title, provide a
+description, and change other settings. Most importantly, you can
+select the content revision (i.e., content item and version thereof)
+that you want to use for this assignment, and the *Publication type*.
+The type can be *Graded assignment*, *Practice activity*, or
+*Reading/resource*. 
+
+On practice assignments, Carnap will record student submissions but
+will not count them as points toward their score in the course. On
+graded assignments, Carnap will record submissions, keep track of
+points earned, and also enforce the settings on the assignment (e.g.,
+how many attempts students have, how long they have to complete the
+assignment, etc.) On reading/resource assignments, Carnap will not
+accept student submissions (but will dispaly problems, provide
+feedback, etc.)
+
+Once you save your draft (click *Save assignment* in the lower right
+corner), you will see the *Assignment record* for your new assignment.
+(You can alos get there by clicking on the assignment title in the
+course record.) Here you can go back to the draft settings for the
+assignment (*Edit assignment*), delete the assignment (*Delete
+draft*), or publish it (*Publish assignment*).
+
+Once an assignment is published, Carnap will allow students to
+complete and submit problems in the assignment. Once a problem in an
+assignment is submitted, Carnap records the point value you have given
+to the problems as a score for the student.  Students can see which
+problems they have submitted and how many points they earned. You can
+also (in the course record page for your course) see a list of
+enrolled students. Below the *assignment management* section of your
+course record, there is a link to download grades for the entire
+course. To download grades for a specific assignment, go to the
+assignment record, then click on *Grades* in the "Policy and grading
+controls" area of the assignment record.
+
