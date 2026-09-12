@@ -25,14 +25,11 @@ return {
                             ["data-carnap-submission"] = "saveAs:"..chunk.label
                         }
 
-                        for k,v in pairs(elem.attributes) do
-                            newOpts["data-carnap-" .. k] = v
-                        end
-                        local body = {}
-                        if chunk.body then
-                            body = pandoc.Str(chunk.body)
-                        end
-                        table.insert(problems, exercises.wrapper({}, chunks[1].label, pandoc.Div(body,newOpts)))
+                        exercises.transferAttributes(elem.attributes, newOpts)
+
+                        local body = chunk.body and pandoc.Str(chunk.body) or {}
+
+                        table.insert(problems, exercises.wrapper({}, chunk.label, pandoc.Div(body,newOpts)))
                     end
                     return pandoc.Div(problems)
                 else return elem

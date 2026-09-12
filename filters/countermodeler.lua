@@ -3,27 +3,28 @@ local exercises = require("exercises")
 return {
     {
         CodeBlock = function (elem)
-            local isSyntaxChecker = false
-            local matchType
+            local isCounterModeler = false
+            local counterModelerType
 
             for _, val in pairs(elem.classes) do
-                if val == "SynChecker" then isSyntaxChecker = true end
-                if val == "Match" or val == "MatchClean"
-                then matchType = val:lower() end
+                if val == "CounterModeler" then isCounterModeler = true end
+                if val == "Simple" or val == "Validity" or val == "Constraint"
+                then counterModelerType = val:lower() end
             end
 
-            if isSyntaxChecker
+            if isCounterModeler
                 then
                     local chunks = exercises.chunks(elem.text)
                     local problems = {}
 
                     for _,chunk in ipairs(chunks) do
                         local newOpts = {
-                            ["data-carnap-type"] = "synchecker",
-                            ["data-carnap-matchType"] = matchType,
+                            ["data-carnap-type"] = "countermodeler",
+                            ["data-carnap-countermodelertype"] = counterModelerType,
                             ["data-carnap-goal"] = chunk.problem,
                             ["data-carnap-submission"] = "saveAs:"..chunk.label
                         }
+
                         exercises.transferAttributes(elem.attributes, newOpts)
 
                         table.insert(problems, exercises.wrapper({}, chunk.label, pandoc.Div({},newOpts)))

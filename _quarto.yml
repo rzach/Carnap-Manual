@@ -58,15 +58,18 @@ book:
     logo: ./images/carnap-logo.png
     collapse-level: 1
 
-bibliography: references.bib
-
 format:
   html:
     filters:
       - ./filters/renderFormulas.lua
       - ./filters/truth-tables.lua
+      - ./filters/countermodeler.lua
       - ./filters/syntax-checkers.lua
+      - ./filters/tree-deductions.lua
+      - ./filters/sequent-deductions.lua
+      - ./filters/derivations.lua
       - ./filters/translate.lua
+      - ./filters/qualitative.lua
     theme: cosmo
     include-in-header:
       text: |
@@ -75,8 +78,8 @@ format:
         <link rel='stylesheet', type='text/css', href='https://carnap.io/static/css/tree.css'>
         <link type='text/css' href='https://cdn.jsdelivr.net/gh/gleachkr/ProofJS@gh-pages/proof.css' rel='stylesheet'>
         <!-- ↓ override bootstrap to prevent visual glitches -->
-        <style type='text/css'> svg { vertical-align: unset } </style>
-        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <style type='text/css'> svg { vertical-align: unset } .exercise { margin-bottom: 10pt }</style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0'></script>
         <script src='https://cdn.jsdelivr.net/gh/gleachkr/ProofJS@gh-pages/proof.js'></script>
 
@@ -86,6 +89,3 @@ format:
         <script defer src='https://carnap.io/static/ghcjs/allactions/lib.js'></script>
         <script defer src='https://carnap.io/static/ghcjs/allactions/out.js'></script>
         <script defer src='https://carnap.io/static/ghcjs/allactions/runmain.js'></script>
-  pdf:
-    documentclass: scrreprt
-
