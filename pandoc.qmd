@@ -160,17 +160,42 @@ Here are the common attributes that apply to to any exercise:
   point value is specified, the exercise is worth 1 point. Only
   integer point values are accepted.
 
-In contrast to Carnap.io, Carnap Next determines the default settings for
-`exam` and `feedback` based on the assignment type and whether grades
-are released. On *Reading/resource* and *Practice assignments*,
-`feedback` defaults to `full` and `exam` defaults to `false` (i.e.,
-only correct exercises can be submitted on practice assignments). On
-*Graded assignments*, `exam` defaults to `true` and `feedback` defaults to `none` until grades are
-released, and to `full` thereafter. If an exercise has `exam` and/or
-`feedback` explicitly specified, it overrides these default settings.
-So a graded exercise that should give feedback or only accept correct
-submissions has to say so on every exercise.
+In contrast to Carnap.io, Carnap Next determines the default settings
+for `exam` and `feedback` based on the assignment type and whether
+grades are released. 
 
+- On *Reading/resource* and *Practice assignments*,
+  `feedback` defaults to `full` and `exam` defaults to `false` (i.e.,
+  only correct exercises can be submitted on practice assignments).
+- On *Graded assignments*, `exam` defaults to `true` and `feedback`
+  defaults to `none` until grades are released, and to `full`
+  thereafter.
+
+If an exercise has `exam` and/or `feedback` explicitly specified, it
+overrides these default settings. So a graded assignment that should
+give feedback or only accept correct submissions has to say so on
+every exercise.
+
+### System
+
+All exercises that display or accept formulas (so anything other than
+short answer or multiple choice) also takes a `system` attribute. This
+specifies the syntax that is allowed for entering formulas (in the
+exercise, or as student input) and for proof exercises, the rules
+and/or axioms.
+
+The value of the `system` attribute can be a built-in system, or a
+system specified with a `theory` block. Currently, the built-in
+systems are:
+
+- `prop`: Carnap's default propositional language.
+- `forallx-calgary-2019`: First-order language FOL according to *forallx:
+  Calgary*'s conventions.
+- `forallx-magnus`: The language QL from P. D. Magnus's original *forallx*.
+- `gentzen-lk`: Rules for (identity-free) first-order sequent calculus.
+
+System definitions can be provided by instructors either as standalone
+content items, or as `aufbau-mm0` blocks inside an assignment content item.
 
 ### Exercise Types
 
