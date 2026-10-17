@@ -1,89 +1,91 @@
 # Qualitative Problems
 
-the `QualitativeProblem` class indicates that a code block will contain
-qualitative problems, either short-answer or multiple choice questions.
+Code blocks for
+qualitative problems, either short-answer or multiple choice
+questions, are entered using the directives:
 
-## Short Answer
-
-To create a short-answer problem, use the class `ShortAnswer`, and simply
-provide a short answer question, like so:
-
-    ```{.QualitativeProblem .ShortAnswer}
-    1.1 How are you feeling today?
-    ```
-
-The number indicates the exercise number. This is immediately followed by the
-question. The result will be:
-
-```{.QualitativeProblem .ShortAnswer}
-1.1 How are you feeling today?
-```
-
-Student submissions to short-answer prompts will be recorded, but by default
-will not be assigned any credit. They will, however, be visible in the review
-section for the assignment, so it will be possible to assign them partial
-credit, as if they were an exam problem. The behavior for awarding credit can
-also be configured with the `give-credit` option, see Advanced Usage below.
+- `multiple-choice`
+- `free-response`
+- `short-answer`
 
 ## Multiple Choice
 
-To create a multiple-choice problem, use the class `MultipleChoice`, and
+To create a multiple-choice problem, use the class `multiple-choice`, and
 provide a question along with a set of answers (one per line), like so:
 
-    ```{.QualitativeProblem .MultipleChoice}
-    1.2 How are you feeling today?
-    | Good!
-    | +OK!
-    | Meh.
-    ```
+    ::::multiple-choice{id="tautology" title="Tautology" points="2"}
+    Which sentence is a tautology?
 
-The answers should be typed as you want them to be displayed. Carnap doesn't
-currently render formulas or LaTeX within multiple choice answers, and HTML
-escape codes like `&or;` will cause some trouble for the answer-parser. If you
-want to include a formula with symbols, just use the symbols directly in the
-answer. You can copy-paste from here: ¬,→,∧,∨,∀,∃.
+    - [x] excluded_middle | P or not P
+    - [ ] contradiction | P and not P
+    ::::
 
-Answers marked with a `+` or a `*` will be accepted as correct. Answers marked
-with a `-` or a `+` will be pre-selected. So the result of the above is:
+The answers should be typed as you want them to be displayed. Text
+before the `|` is an answer id, which will not be displayed.Carnap does render formulas or LaTeX within multiple choice
+answers.
 
-```{.QualitativeProblem .MultipleChoice}
-1.2 How are you feeling today?
-| Good!
-| +OK!
-| Meh.
-```
+Answers marked with a `x` or a `X` will be accepted as correct. So the result of the above is:
 
-Which has "OK!" preselected and just one correct answer, namely "OK!".
+::::multiple-choice{id="tautology" title="Tautology" points="2"}
+Which sentence is a tautology?
 
-## Multiple Selection
+- [x] excluded_middle | P or not P
+- [ ] contradiction | P and not P
+::::
 
-To create a multiple-selection problem, use the class `MultipleSelection`, 
+Whether the exercise allows single or multiple answers to be selected
+is determined by `mode=single` or `mode=multiple`. `single` is the
+default and can be omitted.
 
-To create a multiple-choice problem, use the class `MultipleChoice`, and
-provide a question along with a set of answers (one per line), like so:
+** Note: no more pre selecting answers**
 
-    ```{.QualitativeProblem .MultipleSelection}
-    1.2 How are you feeling today?
-    | - Bad!
-    | + OK!
-    | * I contain multitudes.
-    ```
+## Short Answer
 
-As above, answers should be typed as you want them displayed.
+To create a short-answer problem, use the directive `short-answer`, and simply
+provide a short answer question, like so:
 
-Answers marked with a `+` or a `*` must be selected for a correct answer, and
-other answers must not be selected. Answers marked with a `-` or a `+` will be
-pre-selected. So the result of the above is:
+    ::::short-answer{id="rule_name" answer="modus ponens" points="2"}
+    Name the rule used in this inference.
+    ::::
 
-```{.QualitativeProblem .MultipleSelection}
-1.2 How are you feeling today?
-| - Bad!
-| + OK!
-| * I contain multitudes.
-```
+For alternative correct answers, use `answers` (note the plural!) with `|` separators:
 
+    ::::short-answer{id="rule_abbrev" answers="modus ponens|MP"}
+    Name the rule.
+    ::::
+
+The result is:
+
+::::short-answer{id="rule_abbrev" answers="modus ponens|MP"}
+Name the rule.
+::::
+
+Submitted `short-answer` exercises are automatically scored: if the
+answer matches the text provided it gets full points. Case and
+whitespace is ignored, unless you provide `case-sensitive="true"`.
+
+## Free Response
+
+Questions asking students to provide free response answers without
+matching to given correct answers are created by the `free-response` directive.
+
+    ::::free-response{id="explain" points="5" rubric="Truth preservation."}
+    Explain why the argument is valid.
+    ::::
+
+::::free-response{id="explain" points="5" rubric="Truth preservation."}
+Explain why the argument is valid.
+::::
+
+Student submissions to `free-response` prompts will be recorded, but by default
+will not be assigned any credit. They will, however, be visible in the review
+section for the assignment, so it will be possible to assign them partial
+credit, as if they were an exam problem. Use the `rubric` attribute to
+provide a hint visible to the grader when reviewing submissions.
 
 ## Numerical
+
+**Not implemented**?
 
 To create a numerical problem, use the class `.Numerical` and provide a
 question and answer, in the format `ANSWER : QUESTION`, optionally pre-filling
@@ -106,6 +108,8 @@ won't be accepted without being evaluated). They'll be saved as decimal
 expressions.
 
 ## Advanced Usage
+
+** Advanced options not implemented**
 
 #### Options and Attributes
 
