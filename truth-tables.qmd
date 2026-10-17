@@ -134,9 +134,6 @@ the table is correct or not. (For truth tables, `check=cells`,
 `feedback=terse`, and `feedback=none`, which is the way Carnap 1.0
 handled feedback.)
 
-
-**Rest of file not updated**
-
 ## Additional attributes and options
 
 #### Which cells to fill
@@ -378,26 +375,19 @@ F F | F | F | . . .
 
 (The `turnstilemark` attribute is recognized but not implemented yet.)
 
-
-** Systems not yet implemented**
-
 #### Systems
 
 The way that formulas are parsed and displayed can also be customized. This is
 done by setting the `system` attribute to indicate which formal system you are
 drawing your syntax from. So for example, 
 
-    ~~~{.TruthTable .Simple system="LogicBookSD"}
-    2.8 A > B & C
-    ~~~
+    :::truth-table{id="2.15" variant=simple system="forallx-magnus"}
+    - A > B & C
+    :::
 
 will generate:
 
-~~~{.TruthTable .Simple system="LogicBookSD"}
-2.8 A > B & C
-~~~
+:::truth-table{id="2.15" system="forallx-magnus"}
+- A > B & C
+:::
 
-The available systems are: `prop` `montagueSC` `LogicBookSD` `LogicBookSDPlus`
-`hausmanSL` `howardSnyderSL` `ichikawaJenkinsSL` `hausmanSL` `magnusSL`
-`magnusSLPlus` `thomasBolducAndZachTFL` `thomasBolducAndZachTFL2019`
-`tomassiPL` and `hardegreeSL`.
