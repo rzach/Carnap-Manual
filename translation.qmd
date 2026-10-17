@@ -1,82 +1,79 @@
 # Translations 
 
-the `Translate` class indicates that a code block will contain translation
+the `translation` class indicates that a code block will contain translation
 exercises that require symbolizing natural language sentences.
 
-## Propositional Logic
+## Propositional Translations
 
-You can create propositional logic translation problems by also adding the
-class `Prop`, like so:
+For propositional translation exercises, provide an English sentence
+and a list of accepted translations. For instance,
 
-    ~~~{.Translate .Prop}
-    3.1 P/\Q : People want to know what's going on and questions are unavoidable
-    ~~~
+    :::translate{id="3.1" variant="prop"}
+    People want to know what's going on and questions are unavoidable
+    - P/\Q
+    :::
 
-The number 3.1 indicates the exercise number, and the colon separates the
-solution from the text that will be presented for translation. The result of
-the above is:
+generates
 
-~~~{.Translate .Prop}
-3.1 P/\Q : People want to know what's going on and questions are unavoidable
-~~~
+:::translate{id="3.1"}
+People want to know what's going on and questions are unavoidable
+- P/\Q
+:::
 
-To complete it, replace the text to the left of the submit solution button with
-your translation, press return to check, and then press "Submit Solution".
-Propositional translations are considered correct if they are logically
-equivalent to the original answer. So for example, `Q/\P` will be accepted
-above.
+To complete it, type the answer into the text box. Carnap will check
+the answer after a pause in typing. Propositional translations are
+considered correct if they are logically equivalent to the original
+answer. So for example, `Q/\P` will be accepted above.
+
+If you say `variant="prop"`, Carnap rejects quantifiers, identity, and predicates with individual arguments in both
+solutions and submitted answers. `prop` is the default and does not
+have to be specified.
 
 ## First-Order Translation
 
-It is also possible to create first-order translation problems using the class `FOL`, thus:
+It is also possible to create first-order translation problems using
+the variant `first-order`, thus:
 
-    ~~~{.Translate .FOL}
-    3.2 AxF(x) : Everything is fine
-    ~~~
+    :::translate{id="3.2" variant="first-order"}
+    Everything is fine
+    - AxF(x)
+    :::
 
 with the result:
 
-~~~{.Translate .FOL}
-3.2 AxF(x) : Everything is fine
-~~~
+:::translate{id="3.2" variant="first-order"}
+Everything is fine
+- AxF(x)
+:::
 
-These are completed as above. Equivalence of first-order sentences is
-undecidable, so we can't check it, but we can catch most cases of "equivalent"
-translations by using some rewriting rules.[^1] So, for example `~Ex~F(x)` will
-be accepted above.
-
-[^1]: the procedure is roughly as follows:
-
-    a. using the standard rules of passage, drive quantifiers in as far as possible
-       in both the submitted solution $S_0$, and in the target sentence $T_0$, generating two
-       result sentences $S_1$,$T_1$
-    b. using the standard rules of passage, pull out quantifiers as far as
-       possible, in every possible way, generating a set $S_2$ of sentences from
-       $S_1$, and a set of sentences $T_2$ from $T_1$
-    c. allowing permutation of quantifiers within blocks, look for pairs of
-       sentences $(S_3,T_3)$ with matching quantifier prefixes. Canonically
-       rename the variables. Check the matricies of the resulting formulas for
-       propositional equivalence.
+These are completed as above. Carnap conducts a proof search
+attempting to show the provided answer equivalent to the model
+solution(s). Equivalence of first-order sentences is undecidable, so
+this does not always provide a reliable answer. In some cases.
 
 ## Exact Translations
 
-Using the class `Exact`, you can also create "translations" that don't accept
+Using the variant `exact`, you can also create "translations" that don't accept
 logically equivalent answers. These may be useful if you wish to, for example,
 ask a student what the missing premise in some inference is. So, for example
 you might write
 
-    ~~~{.Translate .Exact}
-    3.3 P : To make a modus ponens inference with P→Q, you need...
-    ~~~
+    :::translation{id="3.3" variant=exact}
+    To make a modus ponens inference with P→Q, you need...
+
+    - P
+    :::
 
 to generate:
 
-~~~{.Translate .Exact}
-3.3 P : To make a modus ponens inference with P→Q, you need...
-~~~
+:::translation{id="3.3" variant=exact}
+    To make a modus ponens inference with P→Q, you need...
 
-Exact translations use the same syntax as `Prop` by default, but can be
-configured to use a large number of alternative syntaxes (see below)
+- P
+:::
+
+Exact translations use the same syntax as `variant=prop` by default,
+but can be configured to use alternative systems.
 
 ## Systems
 
@@ -84,34 +81,19 @@ The way that formulas are parsed can also be customized. This is done by
 setting the `system` attribute to indicate which formal system you are drawing
 your syntax from. So for example, 
 
-    ~~~{.Translate .FOL system="magnusQL"}
-    3.5 AxBx : Everything is bananas
-    ~~~
+    :::translation{id="3.4" variant="first-order" system="forallx-magnus"}
+    Everything is totally bananas
+
+    - @x (Tx & Bx)
+    :::
 
 will generate:
 
-~~~{.Translate .FOL system="magnusQL"}
-3.5 AxBx : Everything is bananas
-~~~
+:::translation{id="3.4" variant="first-order" system="forallx-magnus"}
+Everything is totally bananas
 
-For first-order translations, the available systems are: `firstOrder`
-`montagueQC` `magnusQL` `thomasBolducAndZachFOL` `thomasBolducAndZachFOL2019`
-`LogicBookPD` `LogicBookPDPlus` `hausmanPL` `howardSnyderPL`
-`ichikawaJenkinsQL` `hardegreePL` `goldfarbAltND` `goldfarbNDPlus` and
-`goldfarbAltNDPlus`. 
-
-For propositional translations, the available systems are: `prop` `montagueSC`
-`LogicBookSD` `LogicBookSDPlus` `hausmanSL` `howardSnyderSL`
-`ichikawaJenkinsSL` `hausmanSL` `magnusSL` `magnusSLPlus`
-`thomasBolducAndZachTFL` `thomasBolducAndZachTFL2019` `tomassiPL` and
-`hardegreeSL`.
-
-For exact translations, the available systems are all of the above, together
-with modal logic systems `.HardegreeSL` `.HardegreePL` `.HardegreeWTL`,
-`.HardegreeL` `.HardegreeK` `.HardegreeT` `.HardegreeB` `.HardegreeD`
-`.Hardegree4` `.Hardegree5`, second order systems `.SecondOrder`
-`.PolySecondOrder`,  and set theory systems `ElementaryST` and
-`SeparativeST` 
+- @x (Tx & Bx)
+:::
 
 ## Advanced usage
 
@@ -121,35 +103,31 @@ If you wish to allow students to find one translation of a sentence that admits
 several formalizations, you can use a comma-separated list of admissible
 solutions. So, 
 
-    ~~~{.Translate .FOL}
-    3.4 (P /\ Q) \/ R, P/\(Q\/R) : Jack jumped the fence and was caught by the watchman or got away.
-    ~~~
+    :::translation{id="3.5"}
+    Jack jumped the fence and was caught by the watchman or got away.
+    - (P /\ Q) \/ R, P/\(Q\/R)
+    :::
 
 generates 
 
-~~~{.Translate .FOL}
-3.4 (P /\ Q) \/ R, P/\(Q\/R) : Jack jumped the fence and was caught by the watchman or got away.
-~~~
+:::translation{id="3.5"}
+Jack jumped the fence and was caught by the watchman or got away.
+- (P /\ Q) \/ R, P/\(Q\/R)
+:::
 
 #### Options and Attributes
 
-In addition to allowing for custom point values with `points=VALUE`, and
-turning off submission with `submission="none"`, translations also have the
-following options
+The following are allowed as space-separated values of `options`:
 
 <div class="table">
 
 Name                     Effect
 ------------------------ ------------------------------------------------------------------------
 `nocheck`                Disables checking solutions
-`exam`                   Allows for submission of work which is incomplete or incorrect
 `checksyntax`            When `exam` is active, blocks submission of syntactically incorrect work
 ------------------------ ------------------------------------------------------------------------
 
 </div>
-
-These can be included in the space separated list supplied to the `options`
-attribute. 
 
 #### Translation tests
 
@@ -190,31 +168,33 @@ Name                     Effect
 When using multiple tests, their names must be separated by spaces, so for
 example,
 
-    ~~~{.Translate .FOL tests="PNF maxNeg:0"}
-    3.6 ~Ex~F(x) : Nothing is not bananas.
-    ~~~
+    :::translation{id="3.6" variant="first-order" tests="PNF maxNeg:0"}
+    Nothing is not bananas.
+
+    - ~Ex~F(x)
+    :::
 
 will generate:
 
-~~~{.Translate .FOL tests="PNF maxNeg:0"}
-3.6 ~Ex~F(x) : Nothing is not bananas.
-~~~
+:::translation{id="3.6" variant="first-order" tests="PNF maxNeg:0"}
+Nothing is not bananas.
+- ~Ex~F(x)
+:::
 
 #### Partial Solutions
 
-It's possible to include a partial solution to a translation problem, by
-including the partial solution after a `|` following the problem. So for
+It's possible to include a partial solution to a translation problem,
+by including the partial solution as a value for `starter`. So for
 example,
 
-    ~~~{.Translate .FOL options="nocheck"}
-    3.7 AxF(x) : Everything is fine
-    | For all x, x is fine
-    ~~~
+    :::translation{id="3.7" variant="first-order" options="nocheck" starter="For all x, x is fine"}
+    Everything is fine
+    - AxF(x)
+    :::
 
 Generates
 
-~~~{.Translate .FOL options="nocheck"}
-3.7 AxF(x) : Everything is fine
-| For all x, x is fine
-~~~
-
+:::translation{id="3.7" variant="first-order" options="nocheck" starter="For all x, x is fine"}
+Everything is fine
+- AxF(x)
+:::
